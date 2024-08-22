@@ -21,6 +21,6 @@ router
   .route("/update")
   .patch(verifyJWT, upload.single("avatar"), updateUserDetails);
 router.route("/change-password").patch(verifyJWT, changePassword);
-router.route("/refresh-token").patch(verifyJWT, refreshAccessToken);
+router.route("/refresh-token").patch(refreshAccessToken);
 
 module.exports = router;

@@ -24,6 +24,7 @@ const generateRefreshToken = async (user) => {
 const options = {
   httpsOnly: true,
   secure: true,
+  expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
 };
 
 const register = asyncHandler(async (req, res) => {
@@ -215,7 +216,6 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Refresh Token is used or Expired");
 
   const { accessToken, refreshToken } = await generateRefreshToken(user);
-
   return res
     .status(200)
     .cookie("accessToken", accessToken, options)
