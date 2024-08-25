@@ -52,6 +52,10 @@ const todoSchema = Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
+  phoneNumber: {
+    type: String,
+    required: true,
+  },
 });
 
 todoSchema.plugin(aggregation);

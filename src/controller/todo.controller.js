@@ -28,6 +28,7 @@ const createTodoForList = asyncHandler(async (req, res) => {
   const createdTodo = await Todo.create({
     ...todoValue,
     "belongsTo.list_id": list_id,
+    phoneNumber: req?.user.phoneNumber,
   });
 
   return res
@@ -263,6 +264,7 @@ function sendNotification(phoneNumber, todoName, message) {
       from: twilioNumber,
       to: userNumber,
     })
+    .then(() => console.log("Message is sended successfully"))
     .catch((error) => {
       console.error("Error sending message", error);
     });
@@ -272,14 +274,15 @@ function sendNotification(phoneNumber, todoName, message) {
   setInterval(async () => {
     try {
       const currentDate = Date.now();
-      const twoMinutesFromNow = currentDate + 10.5 * 60 * 1000;
+      const tenMinutesFromNow = currentDate + 10.5 * 60 * 1000;
       const data = await Todo.find({
         remindMe: {
-          $gt: currentDate,
-          $lt: twoMinutesFromNow,
+          $gt: currentDate - 10.5 * 60 * 1000,
+          $lt: currentDate,
         },
         isReminded: false,
       });
+
       data.length > 0 &&
         data.forEach((todo) => {
           Todo.findByIdAndUpdate(todo._id, { isReminded: true }).then(() => {
