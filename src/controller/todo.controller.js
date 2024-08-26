@@ -253,7 +253,7 @@ const getTodoById = asyncHandler(async (req, res) => {
 function sendNotification(phoneNumber, todoName, message) {
   if (!phoneNumber) return;
 
-  const remMsg = `🔔 Reminder Alert! 🔔\nIs _*${todoName.trim()}*_ done yet? Remember: _*${message.trim()}*_.\nYou're on fire! 🔥`;
+  const remMsg = `🔔 _*Reminder Alert!*_ 🔔\nTitle:- _*${todoName.trim()}*_ \nDescription: _*${message.trim()}*_.\n`;
 
   const userNumber = `whatsapp:+91${phoneNumber}`;
   const twilioNumber = `whatsapp:${process.env.TWILIO_PHONE_NUMBER}`;
